@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import { Routes, Route } from 'react-router-dom';
 
-import * as authService from './services/auth'
+import * as authService from './services/authService'
 import Dashboard from './components/Dashboard/Dashboard'
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
