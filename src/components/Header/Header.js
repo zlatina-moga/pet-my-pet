@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom'
 
 export default function Header ({
     isAuthenticated,
-    usrrname
+    user
 }) {
     let guestNavigation = (
         <div id="guest">
@@ -12,7 +12,7 @@ export default function Header ({
     )
     let usernavigation = (
         <div id="user">
-            <span>Welcome, email</span>
+            <span>Welcome, {user}</span>
             <Link className="button" to="/my-pets">My Pets</Link>
             <Link className="button" to="/create">Add Pet</Link>
             <Link className="button" to="#">Logout</Link>
