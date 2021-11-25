@@ -10,6 +10,7 @@ import Details from './components/Details/Details';
 import Edit from './components/Edit/Edit';
 import MyPets from './components/MyPets/MyPets';
 import Register from './components/Register/Register';
+import Logout from './components/Logout/Logout';
 
 function App() {
   const [userInfo, setUserInfo] = useState({isAuthenticated: false, username: ''})
@@ -27,8 +28,17 @@ function App() {
       setUserInfo({
         isAuthenticated: true,
         user: username,
-    })
-  }
+      })
+    }
+
+    const onLogout = () => {
+      setUserInfo({
+        isAuthenticated: false,
+        user: '',
+      })
+    }
+
+
   return (
     <div id="container">
       <Header {...userInfo}/>
@@ -37,6 +47,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Dashboard/>} />
                 <Route path='/login' element={<Login onLogin={onLogin}/>} />
+                <Route path='/logout' element={<Logout onLogout={onLogout}/>}/>
                 <Route path='/register' element={<Register/>} />
                 <Route path='/my-pets' element={<MyPets/>} />
                 <Route path='/create' element={<Create/>} />
