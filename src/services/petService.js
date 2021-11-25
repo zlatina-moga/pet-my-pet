@@ -19,3 +19,9 @@ export const create = async(petData) => {
     let result = response.json();
     return result;
 }
+
+export const getOne = async (petId) => {
+    let respone = await fetch(`${baseUrl}/data/pets/${petId}`)
+    let result = await respone.json();
+    return result;
+}

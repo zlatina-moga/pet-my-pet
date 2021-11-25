@@ -40,7 +40,7 @@ function App() {
                 <Route path='/register' element={<Register/>} />
                 <Route path='/my-pets' element={<MyPets/>} />
                 <Route path='/create' element={<Create/>} />
-                
+                <Route path='/details/:petId' element={<Details />}/>
             </Routes>
         </main>
         <footer id="site-footer">
