@@ -1,7 +1,9 @@
 import {useNavigate} from 'react-router-dom'
 import * as authService from '../../services/authService'
 
-export default function Login({onLogin}) {
+export default function Login({
+    onLogin
+}) {
     const navigate = useNavigate()
     const onLoginHandler = (e) => {
         e.preventDefault();
