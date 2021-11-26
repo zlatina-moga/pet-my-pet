@@ -12,12 +12,15 @@ export default function Create() {
             .then(res => res.json())
             .then(res => {
                 let typesResult = Object.values(res);
+
                 let categories = typesResult.reduce((a, x) => {
-                    if (!a.includes(x.category)) {
-                        a.push(x.category)
+                    if (!a[x.category]) {
+                        a[x.category] = []
                     }
+                    a[x.category].push(x)
+
                     return a;
-                }, [])
+                }, {})
                 setCategories(categories)
                 setTypes(typesResult)
             })
@@ -43,7 +46,7 @@ export default function Create() {
     }
 
     const onCategoryChange = (e) => {
-        setTypes(state => state.filter( x => x.category == e.target.value))
+        setTypes(categories[e.target.value]);
     }
     return (
         <section id="create-page" className="create">
@@ -69,23 +72,18 @@ export default function Create() {
                     </span>
                 </p>
                 <p className="field">
-                    <label htmlFor="type">Type</label>
+                    <label htmlFor="category">Category</label>
                     <span className="input">
-                        <select id="type" name="type">
-                            {types.map(x=> <option key={x._id} value={x._id}>{x.name}</option>)}
+                        <select id="category" name="category" onChange={onCategoryChange}>
+                            {Object.keys(categories).map(x=> <option key={x} value={x}>{x}</option>)}
                         </select>
                     </span>
                 </p>
                 <p className="field">
-                    <label htmlFor="category">Category</label>
+                    <label htmlFor="type">Type</label>
                     <span className="input">
-                        <select id="category" name="category" onChange={onCategoryChange}>
-                            {types.reduce((a, x) => {
-                                if (!a.includes(x.category)) {
-                                    a.push(x.category)
-                                }
-                                return a;
-                            }, []).map(x=> <option key={x} value={x}>{x}</option>)}
+                        <select id="type" name="type">
+                            {types.map(x=> <option key={x._id} value={x._id}>{x.name}</option>)}
                         </select>
                     </span>
                 </p>
