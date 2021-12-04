@@ -23,6 +23,7 @@ function App() {
       user
     })
   }, []);
+  
 
     const onLogin = (username) => {
       setUserInfo({
@@ -30,6 +31,7 @@ function App() {
         user: username,
       })
     }
+    
 
     const onLogout = () => {
       setUserInfo({
