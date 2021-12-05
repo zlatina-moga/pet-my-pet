@@ -15,12 +15,13 @@ export default function Login({
 
         authService.login(email, password)
             .then((authData) => {
-                console.log('logged');
-                console.log(authData);
+                onLogin(authData);
+                navigate('/');
             })
-
-        onLogin(email)
-        navigate('/')
+            .catch(err => {
+                //add show notification
+                console.log(err)
+            })   
     }
 
     return (
