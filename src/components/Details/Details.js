@@ -14,7 +14,7 @@ export default function Details() {
             .then(petResult => {
                 setPet(petResult)
             })    
-    },[]);
+    },[petId]);
 
     const deleteHandler = (e) => {
         e.preventDefault();
