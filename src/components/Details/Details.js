@@ -9,9 +9,11 @@ export default function Details() {
     const [pet, setPet] = useState({});
     let {petId} = useParams();
 
-    useEffect(async () => {
-        let petResult = await petService.getOne(petId);
-        setPet(petResult)
+    useEffect(() => {
+        petService.getOne(petId)
+            .then(petResult => {
+                setPet(petResult)
+            })    
     },[]);
 
     const deleteHandler = (e) => {
