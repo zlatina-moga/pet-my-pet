@@ -1,15 +1,26 @@
 import {useParams} from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import * as petService from '../../services/petService'
+import { useState, useEffect, useContext } from 'react';
+import * as petService from '../../services/petService';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Details() {
+    const {user} = useContext(AuthContext)
     const [pet, setPet] = useState({});
     let {petId} = useParams();
 
     useEffect(async () => {
         let petResult = await petService.getOne(petId);
         setPet(petResult)
-    },[])
+    },[]);
+
+    const ownerButtons = (
+        <>
+            <a className="button" href="#">Edit</a>
+            <a className="button" href="#">Delete</a>
+        </>
+    );
+
+    const userButtons = <a className="button" href="#">Like</a>;
 
     return (
         <section id="details-page" className="details">
@@ -19,15 +30,14 @@ export default function Details() {
             <p className="img"><img src={pet.imageUrl} /></p>
             <div className="actions">
 
-                <a className="button" href="#">Edit</a>
-                <a className="button" href="#">Delete</a>
-                
-                <a className="button" href="#">Like</a>
-                
+                { user._id && (user._id === pet._ownerId
+                    ? ownerButtons
+                    : userButtons
+                )}
           
                 <div className="likes">
                     <img className="hearts" src="/images/heart.png" />
-                    <span id="total-likes">Likes: {pet.likes}</span>
+                    <span id="total-likes">Likes: {pet.likes?.length}</span>
                 </div>
 
             </div>
