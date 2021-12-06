@@ -7,11 +7,12 @@ export const getAll = async ()  => {
     return result;
 }
 
-export const create = async(petData) => {
+export const create = async(petData, token) => {
     let response = await fetch(`${baseUrl}/data/pets`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-Authorization': token
         },
         body: JSON.stringify(petData)
     });
