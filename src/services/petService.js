@@ -26,3 +26,12 @@ export const getOne = async (petId) => {
     let result = await respone.json();
     return result;
 }
+
+export const destroy = (petId, token) => {
+    return fetch(`${baseUrl}/data/pets/${petId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-Authorization': token
+        }
+    }).then (res => res.json())
+}
