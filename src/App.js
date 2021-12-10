@@ -10,11 +10,13 @@ import Edit from './components/Edit/Edit';
 import MyPets from './components/MyPets/MyPets';
 import Register from './components/Register/Register';
 import Logout from './components/Logout/Logout';
+import ErrorBoundary from './components/Common/ErrorBoundary'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
+    <ErrorBoundary>
     <AuthProvider>
       <div id="container">
        <Header />
@@ -36,6 +38,7 @@ function App() {
 
       </div>
       </AuthProvider>
+      </ErrorBoundary>
   );
 }
 
