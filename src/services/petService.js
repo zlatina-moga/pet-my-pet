@@ -1,11 +1,8 @@
-const baseUrl = `http://localhost:3030`
+import { request } from "./requester";
 
-export const getAll = async ()  => {
-    let response = await fetch(`${baseUrl}/data/pets`)
-    let pets = await response.json();
-    let result = Object.values(pets)
-    return result;
-}
+const baseUrl = `http://localhost:3030`;
+
+export const getAll = () => request(`${baseUrl}/data/pets`);
 
 export const create = async(petData, token) => {
     let response = await fetch(`${baseUrl}/data/pets`, {
