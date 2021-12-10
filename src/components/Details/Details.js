@@ -3,6 +3,7 @@ import { useState, useEffect} from 'react';
 import * as petService from '../../services/petService';
 import { useAuthContext } from '../../contexts/AuthContext';
 import ConfirmDialog from '../Common/ConfirmDialog';
+import { Button } from 'react-bootstrap';
 
 export default function Details() {
     const navigate = useNavigate()
@@ -36,6 +37,25 @@ export default function Details() {
         setShowDeleteDialog(true)
     }
 
+    const likeButtonClick = () => {
+        if (pet.likes.includes(user._id)){
+            console.log('User already liked')
+            return;
+        }
+
+        let likes = [...pet.likes, user._id];
+        let likedPet = {...pet, likes};
+
+        petService.like(pet._id, likedPet, user.accessToken)
+            .then((resdata) => {
+                console.log(resdata)
+                setPet(state => ({
+                    ...state,
+                   likes
+                }))
+            })
+    }
+
     const ownerButtons = (
         <>
             <a className="button" href="#">Edit</a>
@@ -43,7 +63,7 @@ export default function Details() {
         </>
     );
 
-    const userButtons = <a className="button" href="#">Like</a>;
+    const userButtons = <Button onClick={likeButtonClick} className="button">Like</Button>;
 
     return (
         <>
