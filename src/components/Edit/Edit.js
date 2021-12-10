@@ -15,7 +15,7 @@ const types = [
 export default function Edit() {
     const {petId} = useParams();
     const [errors, setErrors] = useState({name: null})
-    const [pet] = usePetState(petId);
+    const [pet, setPet] = usePetState(petId);
 
     const onEditSubmitHandler= (e) => {
         e.preventDefault();
@@ -59,7 +59,7 @@ export default function Edit() {
                 <p className="field">
                     <label htmlFor="type">Type</label>
                     <span className="input">
-                        <select id="type" name="type" defaultValue={pet.type}>
+                        <select id="type" name="type" defaultValue={pet.type} onChange={(e) => setPet(s => ({...s, type: e.target.value}))}>
                             {types.map(t => 
                                 <option key={t.value} value={t.value}> {t.text} </option>)}
                         </select>
