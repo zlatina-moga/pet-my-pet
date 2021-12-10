@@ -53,7 +53,7 @@ export default function Details() {
 
     const ownerButtons = (
         <>
-            <a className="button" href="/edit">Edit</a>
+            <a className="button" href={`/edit/${pet._id}`}>Edit</a>
             <a className="button" href="#" onClick={deleteClickHandler}>Delete</a>
         </>
     );
