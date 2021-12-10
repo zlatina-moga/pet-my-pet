@@ -1,10 +1,9 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import * as petService from '../../services/petService';
-import {AuthContext} from '../../contexts/AuthContext';
+import {useAuthContext} from '../../contexts/AuthContext';
 
 export default function Create() {
-    const { user } = useContext(AuthContext)
+    const { user } = useAuthContext();
     const navigate = useNavigate();
 
     const onCreate = (e) => {
