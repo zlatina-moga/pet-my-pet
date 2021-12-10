@@ -2,11 +2,13 @@ import {useParams, useNavigate} from 'react-router-dom';
 import { useState, useEffect} from 'react';
 import * as petService from '../../services/petService';
 import { useAuthContext } from '../../contexts/AuthContext';
+import ConfirmDialog from '../Common/ConfirmDialog';
 
 export default function Details() {
     const navigate = useNavigate()
     const {user} = useAuthContext();
     const [pet, setPet] = useState({});
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     let {petId} = useParams();
 
     useEffect(() => {
@@ -22,20 +24,31 @@ export default function Details() {
         petService.destroy(petId, user.accessToken)
             .then(() => {
                 navigate('/')
-        })
+            })
+            .finally(() => {
+                setShowDeleteDialog(false)
+            })
+    }
+
+    const deleteClickHandler = (e) => {
+        e.preventDefault();
+
+        setShowDeleteDialog(true)
     }
 
     const ownerButtons = (
         <>
             <a className="button" href="#">Edit</a>
-            <a className="button" href="#" onClick={deleteHandler}>Delete</a>
+            <a className="button" href="#" onClick={deleteClickHandler}>Delete</a>
         </>
     );
 
     const userButtons = <a className="button" href="#">Like</a>;
 
     return (
-        <section id="details-page" className="details">
+        <>
+        <ConfirmDialog show={showDeleteDialog} onClose={() => setShowDeleteDialog(false)} onSave={deleteHandler}/>
+         <section id="details-page" className="details">
         <div className="pet-information">
             <h3>Name: {pet.name}</h3>
             <p className="type">Type: {pet.type}</p>
@@ -58,6 +71,7 @@ export default function Details() {
             <h3>Description:</h3>
             <p>{pet.description}</p>
         </div>
-    </section>
+      </section>
+    </>
     )
 }

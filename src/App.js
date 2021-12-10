@@ -11,6 +11,7 @@ import MyPets from './components/MyPets/MyPets';
 import Register from './components/Register/Register';
 import Logout from './components/Logout/Logout';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
