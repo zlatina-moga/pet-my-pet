@@ -1,8 +1,8 @@
-import { request } from "./requester";
+import *  as request from "./requester";
 
 const baseUrl = `http://localhost:3030`;
 
-export const getAll = () => request(`${baseUrl}/data/pets`);
+export const getAll = () => request.get(`${baseUrl}/data/pets`);
 
 export const create = async(petData, token) => {
     let response = await fetch(`${baseUrl}/data/pets`, {
@@ -24,6 +24,8 @@ export const getOne = async (petId) => {
     return result;
 }
 
+export const update = (petId, petData) => request.put(`${baseUrl}/data/pets/${petId}`, petData);
+
 export const destroy = (petId, token) => {
     return fetch(`${baseUrl}/data/pets/${petId}`, {
         method: 'DELETE',
@@ -43,3 +45,4 @@ export const like = (petId, pet, token) => {
         body: JSON.stringify({pet})
     }).then(res => res.json())
 }
+

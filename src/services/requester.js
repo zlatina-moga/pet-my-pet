@@ -1,5 +1,20 @@
-export const request = (url) => {
-    return fetch(url).then(responseHandler)
+export const request = async (method, url, data) => {
+    let promiseResult = null;
+
+    if (method == 'GET') {
+        promiseResult = fetch(url)
+    } else {
+        promiseResult = fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Authorization': getToken()
+            },
+            body: JSON.stringify(data)
+        })
+    }
+
+    return promiseResult.then(responseHandler)
 };
 
 async function responseHandler(res) {
@@ -10,3 +25,23 @@ async function responseHandler(res) {
         throw jsonData;
     }
 }
+
+function getToken() {
+    try {
+        let userItem = localStorage.getItem('user');
+
+        if (!userItem) {
+            throw {message: 'You must be authenticated'}
+        }
+
+        let user = JSON.parse(userItem)
+        return user.accessToken;
+        
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+export const get = request.bind(null, 'GET');
+
+export const put = request.bind(null, 'PUT')

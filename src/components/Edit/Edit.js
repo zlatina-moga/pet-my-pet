@@ -14,21 +14,24 @@ const types = [
 
 export default function Edit() {
     const {petId} = useParams();
-    const [errors, setErrors] = useState({name: null})
+    const [errors, setErrors] = useState({name: false})
     const [pet, setPet] = usePetState(petId);
 
     const onEditSubmitHandler= (e) => {
         e.preventDefault();
+
+        let petData = Object.fromEntries(new FormData(e.currentTarget))
+        petService.update(pet._id, petData);
     }
 
     const nameChangeHandler = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         let currentName = e.target.value;
         if (currentName.length < 3 ) {
             setErrors(state => ({...state, name: 'Your name should be at least 3 characters'}))
         } else {
-            setErrors(state => ({...state, name: null}))
+            setErrors(state => ({...state, name: false}))
         }
     }
     return (
