@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
+
 import { AuthProvider } from './contexts/AuthContext';
+import { NotificationProvider } from './contexts/NotificationContext'
 
 import Dashboard from './components/Dashboard/Dashboard'
 import Header from './components/Header/Header';
@@ -10,7 +12,8 @@ import Edit from './components/Edit/Edit';
 import MyPets from './components/MyPets/MyPets';
 import Register from './components/Register/Register';
 import Logout from './components/Logout/Logout';
-import ErrorBoundary from './components/Common/ErrorBoundary'
+import ErrorBoundary from './components/Common/ErrorBoundary';
+import Notification from './components/Common/Notification';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -18,8 +21,10 @@ function App() {
   return (
     <ErrorBoundary>
     <AuthProvider>
+      <NotificationProvider>
       <div id="container">
        <Header />
+       <Notification />
 
         <main id="site-content">
             <Routes>
@@ -38,6 +43,7 @@ function App() {
         </footer>
 
       </div>
+      </NotificationProvider>
       </AuthProvider>
       </ErrorBoundary>
   );
