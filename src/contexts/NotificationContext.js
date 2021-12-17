@@ -18,6 +18,10 @@ export const NotificationProvider = ({
 
     const addNotification = useCallback((message, type= types.error) => {
         setNotification({show: true, message, type})
+
+        setTimeout(() => {
+            setNotification(initialNotificationState)
+        }, 5000)
     }, [])
 
     const hideNotification = useCallback(() => setNotification(initialNotificationState))
