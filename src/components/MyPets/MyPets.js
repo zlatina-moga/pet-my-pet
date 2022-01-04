@@ -1,3 +1,5 @@
+import PetList from '../PetList/PetList'
+
 export default function MyPets() {
     return (
         <section id="my-pets-page" className="my-pets">
@@ -17,6 +19,10 @@ export default function MyPets() {
                 <a className="button" href="#">Details</a>
             </li>
         </ul>
+
+        <PetList>
+            
+        </PetList>
 
         <p className="no-pets">No pets in database!</p>
     </section>
