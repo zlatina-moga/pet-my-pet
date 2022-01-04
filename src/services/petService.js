@@ -4,6 +4,11 @@ const baseUrl = `http://localhost:3030`;
 
 export const getAll = () => request.get(`${baseUrl}/data/pets`);
 
+export const getMyPets = (ownerId) => {
+    let query = encodeURIComponent(`_ownerId="${ownerId}"`)
+    return request.get(`${baseUrl}/data/pets?where=${query}`)
+}
+
 export const create = async(petData, token) => {
     let response = await fetch(`${baseUrl}/data/pets`, {
         method: 'POST',
