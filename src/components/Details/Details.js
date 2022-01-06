@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import usePetState from '../../hooks/usePetState';
 import {useNotificationContext, types} from '../../contexts/NotificationContext'
 import * as petService from '../../services/petService';
+import * as likeService from '../../services/likeService';
 import { useAuthContext } from '../../contexts/AuthContext';
 import ConfirmDialog from '../Common/ConfirmDialog';
 
@@ -36,7 +37,8 @@ export default function Details() {
     }
 
     const likeButtonClick = () => {
-        addNotification('Successfully liked a pet', types.success)
+        likeService.like(user._id, petId)
+            .then(addNotification('Successfully liked a pet', types.success))
 
         /*if (pet.likes.includes(user._id)){
             console.log('User already liked')
