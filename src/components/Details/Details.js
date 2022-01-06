@@ -45,6 +45,11 @@ export default function Details() {
     const likeButtonClick = () => {
         if (user._id === pet._ownerId) return;
 
+        if (pet.likes.includes(user._id)) {
+            addNotification('You alreday liked this pet', types.error)
+            return
+        };
+
         likeService.like(user._id, petId)
             .then(() => {
                 setPet(state => ({...state, likes: [...state.likes, user._id]}));
@@ -60,7 +65,7 @@ export default function Details() {
         </>
     );
 
-    const userButtons = <Button onClick={likeButtonClick} className="button">Like</Button>;
+    const userButtons = <Button onClick={likeButtonClick} disabled={pet.likes?.includes(user._id)} className="button">Like</Button>;
 
     return (
         <>
