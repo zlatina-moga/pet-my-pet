@@ -1,11 +1,12 @@
 import * as request from './requester';
 
-const baseUrl = `http://localhost:3030/data/likes`;
+const baseUrl = `http://localhost:3030/data`;
 
-export const like = (userId, petId) => request.post(`${baseUrl}`, {userId,petId});
+export const like = (userId, petId) => request.post(`${baseUrl}/likes`, {userId,petId});
 
-export const getCount = (petId) => {
+export const getPetLikes = (petId) => {
     const query = encodeURIComponent(`petId="${petId}"`);
-    return request.get(`${baseUrl}?select=_id&where=${query}`)
-        .then(res => res.length);
+
+    return request.get(`${baseUrl}/likes?select=userId&where=${query}`)
+        .then(res => res.map(x => x.userId));
 }

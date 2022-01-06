@@ -18,9 +18,9 @@ export default function Details() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     useEffect(() => {
-        likeService.getCount(petId)
-            .then(likeCount => {
-                setPet(state => ({...state, likes: likeCount}))
+        likeService.getPetLikes(petId)
+            .then(likes => {
+                setPet(state => ({...state, likes}))
             })
     }, [])
 
@@ -44,28 +44,13 @@ export default function Details() {
 
     const likeButtonClick = () => {
         if (user._id === pet._ownerId) return;
-        
+
         likeService.like(user._id, petId)
             .then(() => {
-                setPet(state => ({...state, likes: state.likes + 1}))
-                addNotification('Successfully liked a pet', types.success)
-            })
+                setPet(state => ({...state, likes: [...state.likes, user._id]}));
 
-        /*if (pet.likes.includes(user._id)){
-            console.log('User already liked')
-            return;
-        }
-        let likes = [...pet.likes, user._id];
-        let likedPet = {...pet, likes};
-
-        petService.like(pet._id, likedPet, user.accessToken)
-            .then((resdata) => {
-                console.log(resdata)
-                setPet(state => ({
-                    ...state,
-                   likes
-                }))
-            })*/
+                addNotification('Successfuly liked a pet :)', types.success);
+            });
     }
 
     const ownerButtons = (
@@ -94,7 +79,7 @@ export default function Details() {
           
                 <div className="likes">
                     <img className="hearts" src="/images/heart.png" />
-                    <span id="total-likes">Likes: {pet.likes}</span>
+                    <span id="total-likes">Likes: {pet.likes?.length || 0}</span>
                 </div>
 
             </div>
