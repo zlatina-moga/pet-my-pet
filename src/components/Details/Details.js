@@ -1,5 +1,5 @@
 import {useParams, useNavigate} from 'react-router-dom';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import { Button } from 'react-bootstrap';
 import usePetState from '../../hooks/usePetState';
 import {useNotificationContext, types} from '../../contexts/NotificationContext'
@@ -13,10 +13,16 @@ export default function Details() {
     const navigate = useNavigate()
     const {user} = useAuthContext();
     const {addNotification} = useNotificationContext();
-
     let {petId} = useParams();
     const [pet, setPet] = usePetState(petId);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+    useEffect(() => {
+        likeService.getCount(petId)
+            .then(likeCount => {
+                setPet(state => ({...state, likes: likeCount}))
+            })
+    }, [])
 
     const deleteHandler = (e) => {
         e.preventDefault();
@@ -37,8 +43,13 @@ export default function Details() {
     }
 
     const likeButtonClick = () => {
+        if (user._id === pet._ownerId) return;
+        
         likeService.like(user._id, petId)
-            .then(addNotification('Successfully liked a pet', types.success))
+            .then(() => {
+                setPet(state => ({...state, likes: state.likes + 1}))
+                addNotification('Successfully liked a pet', types.success)
+            })
 
         /*if (pet.likes.includes(user._id)){
             console.log('User already liked')
@@ -83,7 +94,7 @@ export default function Details() {
           
                 <div className="likes">
                     <img className="hearts" src="/images/heart.png" />
-                    <span id="total-likes">Likes: {pet.likes?.length}</span>
+                    <span id="total-likes">Likes: {pet.likes}</span>
                 </div>
 
             </div>
