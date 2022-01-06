@@ -14,6 +14,7 @@ import Register from './components/Register/Register';
 import Logout from './components/Logout/Logout';
 import ErrorBoundary from './components/Common/ErrorBoundary';
 import Notification from './components/Common/Notification';
+import PrivateRoute from './components/Common/PrivateRoute';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -32,7 +33,7 @@ function App() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/logout' element={<Logout />}/>
                 <Route path='/register' element={<Register/>} />
-                <Route path='/my-pets' element={<MyPets/>} />
+                <Route path='/my-pets' element={<PrivateRoute> <MyPets/> </PrivateRoute>} />
                 <Route path='/create' element={<Create/>} />
                 <Route path='/details/:petId' element={<Details />}/>
                 <Route path='/edit/:petId' element={<Edit />}/>
