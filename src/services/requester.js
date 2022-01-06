@@ -44,4 +44,6 @@ function getToken() {
 
 export const get = request.bind(null, 'GET');
 
-export const put = request.bind(null, 'PUT')
+export const put = request.bind(null, 'PUT');
+
+export const post = request.bind(null, 'POST')
